@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/card)
+
 # Card - check out the **[demo](https://jessepollak.github.io/card)**
 
 ### A better credit card form in one line of code
@@ -72,7 +74,7 @@ If you're using npm, you can install card.js with:
     npm install --save card
 
 	var $ = require("jquery");
-    // The current card.js code does not explicitly require jQuery, but instead uses the global, so this line is needed.
+    // The current card.js code does not explictly require jQuery, but instead uses the global, so this line is needed.
     window.jQuery = $;
     var card = require("card");
 
@@ -86,7 +88,7 @@ Card can be used in forms where you have multiple inputs that render to a single
 <div class='card-wrapper'></div>
 <!-- CSS is included via this JavaScript file -->
 <script src="/path/to/card.js"></script>
-<form>
+<form id="cc-form">
     <input type="text" name="number">
     <input type="text" name="first-name"/>
     <input type="text" name="last-name"/>
@@ -95,7 +97,7 @@ Card can be used in forms where you have multiple inputs that render to a single
 </form>
 <script>
 var card = new Card({
-    form: 'form',
+    form: 'cc-form',
     container: '.card-wrapper',
 
     formSelectors: {
@@ -117,7 +119,7 @@ Card renders with default placeholders for card `name`, `number`, `expiry`, and 
 <div class='card-wrapper'></div>
 <!-- CSS is included via this JavaScript file -->
 <script src="/path/to/card.js"></script>
-<form>
+<form id="cc-form">
     <input type="text" name="number">
     <input type="text" name="name"/>
     <input type="text" name="expiry"/>
@@ -126,7 +128,7 @@ Card renders with default placeholders for card `name`, `number`, `expiry`, and 
 <script>
 
 var card = new Card({
-    form: 'form',
+    form: 'cc-form',
     container: '.card-wrapper',
 
     placeholders: {
@@ -151,7 +153,7 @@ To render the card with the strings in a different language, you can pass in a `
 <div class='card-wrapper'></div>
 <!-- CSS is included via this JavaScript file -->
 <script src="/path/to/card.js"></script>
-<form>
+<form id="cc-form">
     <input type="text" name="number">
     <input type="text" name="name"/>
     <input type="text" name="expiry"/>
@@ -160,7 +162,7 @@ To render the card with the strings in a different language, you can pass in a `
 <script>
 
 var card = new Card({
-    form: 'form',
+    form: 'cc-form',
     container: '.card-wrapper',
 
     messages: {
@@ -217,6 +219,58 @@ Card has wrappers that make it easy to use with other javascript libraries:
 * [card-react](https://github.com/shatran/card-react)
 * [react-plastic](https://github.com/armsteadj1/react-plastic) - static CSS only version.
 
+### Vue
+
+For use with VueJs, install card.js from npm:
+
+```bash
+npm install card --save
+
+```
+Add in your component an Div with class 'card-wrapper', just pass in a selector that selects the fields in the correct order. Import the component card.js and add the object in instance mounted like this example:
+```html
+<div class='card-wrapper'></div>
+
+<form>
+    <input type="text" name="number">
+    <input type="text" name="first-name"/>
+    <input type="text" name="last-name"/>
+    <input type="text" name="expiry"/>
+    <input type="text" name="cvc"/>
+</form>
+
+<script>
+import * as Card from "card";
+
+export default {
+    name: "Form CreditCard",
+    mounted() {
+    new Card({ 
+      form: "form#cc-form",
+      container: ".card-wrapper",
+      formSelectors: { 
+        numberInput: "input#cc-number",
+        expiryInput: "input#cc-expiration",
+        cvcInput: "input#cc-cvv",
+        nameInput: "input#cc-name"
+      },
+      width: 270,
+      formatting: true,
+      placeholders: {
+        number: "•••• •••• •••• ••••",
+        name: "Nome Completo",
+        expiry: "••/••",
+        cvc: "•••"
+      }
+    });
+  },
+}
+</script>
+```
+
+
+
+
 ## Development
 
 To contribute, follow this steps:
@@ -226,7 +280,7 @@ $ git clone --recursive https://github.com/jessepollak/card.git
 $ cd card
 $ git submodule init && git submodule update
 $ npm install
-$ npm development
+$ npm run development
 ```
 
 Now, if you go to localhost:8080/example in your browser, you should see the demo page.
@@ -257,8 +311,15 @@ Card is used in the wild in these places:
 * [Robert Dyas](http://www.robertdyas.co.uk)
 * [ROKA](https://www.rokahub.com)
 * [LeSalon](https://lesalon.com)
+* [Kenyan Directorate Of Immigration And Citizen Service](https://dis.ecitizen.go.ke)
 
 Are you using Card in production? If so, we'd love to link to you from this page. Open a PR or drop [@jessepollak](http://twitter.com/jessepollak) a line on [Twitter](http://twitter.com/jessepollak) and we'll add you right away!
+
+## Project scope
+
+The project scope is to improve the capture of payment cards on websites. Issues and fixes related to the user interface and validating of payment cards are in scope.
+
+For questions on how to use Card in your particular project, please ask on Stack Overflow or similar forum.
 
 ## Donations
 
